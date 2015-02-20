@@ -33,16 +33,12 @@ angular.module('visitorApp.controllers', [])
   };
 })
 
-.controller('VisitorsCtrl', function($scope) {
-  $scope.visitors = [
-    { title: 'Steve Smith', id: 1 },
-    { title: 'Alice Walker', id: 2 },
-    { title: 'Chris Johnson', id: 3 },
-    { title: 'Heather Winston', id: 4 },
-    { title: 'Tobias Smith', id: 5 },
-    { title: 'Sarah Marshall', id: 6 }
-  ];
-})
+.controller('VisitorsCtrl', ['$scope', 'visitorApi',
+        function ($scope, visitorApi) {
+            visitorApi.getVisitors(function (data) {
+                $scope.visitors = data;
+            })
+        }])
 
 .controller('VisitorCtrl', function($scope, $stateParams) {
 });
