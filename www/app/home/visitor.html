@@ -2,7 +2,7 @@
   <ion-content class="center">
     <h1>{{visitor.name}}</h1>
     <br />
-    <div>
+    <div ng-if="cameraReady">
       <button class='button button-positive' data-ng-click="takePicture()">
         Take Photo
       </button>

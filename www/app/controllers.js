@@ -45,6 +45,8 @@ angular.module('visitorApp.controllers', [])
             visitorApi.getVisitor($stateParams.visitorId, function (data) {
                 $scope.visitor = data;
 
+                $scope.cameraReady = (Camera ? true : false);
+
                 $scope.takePicture = function(){
                     var cameraOptions = {
                         quality: 50,
