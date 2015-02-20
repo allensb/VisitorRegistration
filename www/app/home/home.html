@@ -1,0 +1,16 @@
+<ion-header-bar class="bar-positive">
+    <h1 class="title">Visitor Registration</h1>
+</ion-header-bar>
+
+<ion-view view-title="Visitor Registration">
+    <ion-content>
+        <ion-list>
+            <ion-item ng-repeat="visitor in visitors" href="#/app/visitor/{{visitor.id}}">
+                {{visitor.title}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
+
+
+
