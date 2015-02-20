@@ -1,4 +1,4 @@
-angular.module('visitorApp', ['ionic', 'visitorApp.controllers'])
+angular.module('visitorApp', ['ionic', 'ngCordova', 'visitorApp.controllers'])
 
 .run(function($ionicPlatform) {
         $ionicPlatform.ready(function () {

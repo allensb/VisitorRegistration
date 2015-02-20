@@ -40,35 +40,30 @@ angular.module('visitorApp.controllers', [])
             })
         }])
 
-.controller('VisitorCtrl', ['$scope', '$stateParams', 'visitorApi',
-        function($scope, $stateParams, visitorApi) {
+.controller('VisitorCtrl', ['$scope', '$stateParams', '$cordovaCamera', 'visitorApi',
+        function($scope, $stateParams, $cordovaCamera, visitorApi) {
             visitorApi.getVisitor($stateParams.visitorId, function (data) {
                 $scope.visitor = data;
+
+                $scope.takePicture = function(){
+                    var cameraOptions = {
+                        quality: 50,
+                        destinationType: Camera.DestinationType.DATA_URL
+                    };
+                    var success = function(data){
+                        $scope.$apply(function () {
+                            /*
+                             remember to set the image ng-src in $apply,
+                             i tried to set it from outside and it doesn't work.
+                             */
+                            $scope.cameraPic = "data:image/jpeg;base64," + data;
+                        });
+                    };
+                    var failure = function(message){
+                        alert('Failed because: ' + message);
+                    };
+                    //call the cordova camera plugin to open the device's camera
+                    navigator.camera.getPicture( success , failure , cameraOptions );
+                };
             })
         }])
-
-.controller('PictureCtrl', function($scope, $cordovaCamera) {
-
-    document.addEventListener("deviceready", function () {
-
-        var options = {
-            quality: 50,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 100,
-            targetHeight: 100,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
-        };
-
-        $cordovaCamera.getPicture(options).then(function(imageData) {
-            var image = document.getElementById('myImage');
-            image.src = "data:image/jpeg;base64," + imageData;
-        }, function(err) {
-            // error
-        });
-
-    }, false);
-});
