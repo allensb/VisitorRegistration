@@ -11,8 +11,16 @@
                 });
         }
 
+        function getVisitor(id, callback) {
+            $http.get('https://registrationapi.herokuapp.com/api/visitor/' + id)
+                .success(function(data) {
+                    callback(data);
+                });
+        }
+
         return {
-            getVisitors: getVisitors
+            getVisitors: getVisitors,
+            getVisitor: getVisitor
         };
     }
 })();

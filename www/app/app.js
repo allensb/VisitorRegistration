@@ -57,7 +57,7 @@ angular.module('visitorApp', ['ionic', 'visitorApp.controllers'])
                 views: {
                     'menuContent': {
                         templateUrl: "app/home/visitor.html",
-                        controller: 'VisitorsCtrl'
+                        controller: 'VisitorCtrl'
                     }
                 }
             });

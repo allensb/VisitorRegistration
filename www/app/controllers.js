@@ -34,11 +34,15 @@ angular.module('visitorApp.controllers', [])
 })
 
 .controller('VisitorsCtrl', ['$scope', 'visitorApi',
-        function ($scope, visitorApi) {
-            visitorApi.getVisitors(function (data) {
+        function($scope, visitorApi) {
+            visitorApi.getVisitors(function(data) {
                 $scope.visitors = data;
             })
         }])
 
-.controller('VisitorCtrl', function($scope, $stateParams) {
-});
+.controller('VisitorCtrl', ['$scope', '$stateParams', 'visitorApi',
+        function($scope, $stateParams, visitorApi) {
+            visitorApi.getVisitor($stateParams.visitorId, function (data) {
+                $scope.visitor = data;
+            })
+        }])
