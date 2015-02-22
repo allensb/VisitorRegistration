@@ -1,37 +1,48 @@
 angular.module('visitorApp.controllers', [])
 
-.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
-  // Form data for the login modal
-  $scope.loginData = {};
+.controller('AppCtrl', function($scope, $ionicModal, $timeout, $cordovaToast) {
+        // Form data for the login modal
+        $scope.loginData = {};
 
-  // Create the login modal that we will use later
-  $ionicModal.fromTemplateUrl('app/login/login.html', {
-    scope: $scope
-  }).then(function(modal) {
-    $scope.modal = modal;
-  });
+        // Create the login modal that we will use later
+        $ionicModal.fromTemplateUrl('app/login/login.html', {
+            scope: $scope
+        }).then(function(modal) {
+            $scope.modal = modal;
+        });
 
-  // Triggered in the login modal to close it
-  $scope.closeLogin = function() {
-    $scope.modal.hide();
-  };
+        // Triggered in the login modal to close it
+        $scope.closeLogin = function() {
+            $scope.modal.hide();
+        };
 
-  // Open the login modal
-  $scope.login = function() {
-    $scope.modal.show();
-  };
+        // Open the login modal
+        $scope.login = function() {
+            $scope.modal.show();
+        };
 
-  // Perform the login action when the user submits the login form
-  $scope.doLogin = function() {
-    console.log('Doing login', $scope.loginData);
+        // Perform the login action when the user submits the login form
+        $scope.doLogin = function() {
+            console.log('Doing login', $scope.loginData);
 
-    // Simulate a login delay. Remove this and replace with your login
-    // code if using a login system
-    $timeout(function() {
-      $scope.closeLogin();
-    }, 1000);
-  };
-})
+            // Simulate a login delay. Remove this and replace with your login
+            // code if using a login system
+            $timeout(function() {
+                $scope.closeLogin();
+            }, 1000);
+        };
+
+        $scope.showToast = function(message, duration, location) {
+            var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+            if ( app ) {
+                $cordovaToast.show(message, duration, location).then(function (success) {
+                    console.log("The toast was shown");
+                }, function (error) {
+                    console.log("The toast was not shown due to " + error);
+                });
+            }
+        }
+    })
 
 .controller('VisitorsCtrl', ['$scope', 'visitorApi',
         function($scope, visitorApi) {
@@ -45,7 +56,8 @@ angular.module('visitorApp.controllers', [])
             visitorApi.getVisitor($stateParams.visitorId, function (data) {
                 $scope.visitor = data;
 
-                $scope.cameraReady = (Camera ? true : false);
+                var app = document.URL.indexOf( 'http://' ) === -1 && document.URL.indexOf( 'https://' ) === -1;
+                $scope.cameraReady = app;
 
                 $scope.takePicture = function(){
                     var cameraOptions = {
